@@ -7,6 +7,7 @@ use systems::*;
 
 pub use components::{Health, Player, PlayerBundle};
 pub use resources::HealthDrainConfig;
+pub use systems::player_is_dead;
 
 pub const PLAYER_VELOCITY: f32 = 500.0;
 pub const SPRITE_IDX: usize = 119;

@@ -7,6 +7,7 @@ use systems::*;
 
 pub use components::{Tree, TreeBundle};
 pub use resources::TreeCount;
+pub use systems::no_more_trees;
 
 pub const SPRITE_TREE_INDEX: usize = 14;
 pub const NUMBER_OF_TREES: usize = 25;

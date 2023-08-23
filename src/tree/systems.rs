@@ -87,3 +87,7 @@ pub(super) fn end_when_no_more_trees(
         }
     }
 }
+
+pub fn no_more_trees(tree_count: Res<TreeCount>) -> bool {
+    tree_count.0 == 0
+}

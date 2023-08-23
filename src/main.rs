@@ -1,7 +1,9 @@
 mod consts;
+mod game_state;
 mod player;
 mod tree;
 
+use game_state::{game_over, AppState};
 use player::PlayerPlugin;
 use tree::TreePlugin;
 
@@ -18,7 +20,9 @@ fn main() {
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(WorldInspectorPlugin::default())
         .add_systems(Update, close_on_esc)
+        .add_state::<AppState>()
         .add_systems(Startup, setup_camera)
+        .add_systems(Update, game_over)
         .add_plugins(PlayerPlugin)
         .add_plugins(TreePlugin)
         .run();
