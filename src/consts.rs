@@ -1,0 +1,13 @@
+use bevy::prelude::*;
+
+pub const SPRITESHEET_COLS: usize = 17;
+pub const SPRITESHEET_ROWS: usize = 8;
+
+pub const SPRITE_TILE_WIDTH: f32 = 16.0;
+pub const SPRITE_TILE_HEIGHT: f32 = 16.0;
+
+pub const UPSCALE_FACTOR: f32 = 5.0;
+
+pub const SPRITE_RENDER_WIDTH: f32 = SPRITE_TILE_HEIGHT * UPSCALE_FACTOR;
+pub const SPRITE_RENDER_HEIGHT: f32 = SPRITE_TILE_WIDTH * UPSCALE_FACTOR;
+pub const SPRITE_SIZE: Vec2 = Vec2::new(SPRITE_RENDER_HEIGHT, SPRITE_RENDER_WIDTH);
