@@ -96,10 +96,7 @@ pub(super) fn player_dies(
 }
 
 pub fn player_is_dead(player_query: Query<(), With<Player>>) -> bool {
-    match player_query.get_single() {
-        Ok(_) => false,
-        Err(_) => true,
-    }
+    player_query.get_single().is_err()
 }
 
 pub(super) fn debug_player_hp(query: Query<&Health, With<Player>>) {
