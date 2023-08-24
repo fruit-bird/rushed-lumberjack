@@ -6,8 +6,13 @@ use super::NUMBER_OF_TREES;
 pub struct TreeCount(pub usize);
 
 impl TreeCount {
-    pub fn new(count: usize) -> Self {
+    pub const fn new(count: usize) -> Self {
         Self(count)
+    }
+
+    #[inline]
+    pub const fn is_zero(&self) -> bool {
+        self.0 == 0
     }
 }
 
