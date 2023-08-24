@@ -24,7 +24,10 @@ pub(super) fn spawn_trees(
     );
     let atlas_handle = atlases.add(texture_atlas);
 
-    let window = window_query.single();
+    let window = match window_query.get_single() {
+        Ok(w) => w,
+        Err(_) => return,
+    };
 
     for _ in 0..NUMBER_OF_TREES {
         let pos_neg_x = if rand::random::<bool>() { 1.0 } else { -1.0 };
@@ -71,18 +74,6 @@ pub(super) fn player_collides_with_tree(
                 commands.entity(entity).despawn();
                 tree_count.0 -= 1;
             }
-        }
-    }
-}
-
-pub(super) fn end_when_no_more_trees(
-    mut commands: Commands,
-    focused_windows: Query<Entity, With<Window>>,
-    tree_count: Res<TreeCount>,
-) {
-    if tree_count.0 == 0 {
-        for window in focused_windows.iter() {
-            commands.entity(window).despawn();
         }
     }
 }

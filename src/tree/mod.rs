@@ -17,7 +17,6 @@ impl Plugin for TreePlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(TreeCount::new(NUMBER_OF_TREES))
             .add_systems(Startup, spawn_trees)
-            .add_systems(Update, player_collides_with_tree)
-            .add_systems(Update, end_when_no_more_trees);
+            .add_systems(Update, player_collides_with_tree);
     }
 }
