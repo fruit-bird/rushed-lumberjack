@@ -5,7 +5,7 @@ use crate::consts::*;
 use super::{
     components::{Health, Player, PlayerBundle},
     resources::HealthDrainConfig,
-    PLAYER_VELOCITY, SPRITE_IDX,
+    PlayerDied, PLAYER_VELOCITY, SPRITE_IDX,
 };
 
 pub(super) fn spawn_player(
@@ -82,22 +82,14 @@ pub(super) fn health_drain(
 pub(super) fn player_dies(
     mut commands: Commands,
     query: Query<(Entity, &Health), With<Player>>,
-    focused_windows: Query<Entity, With<Window>>,
+    mut event_writer: EventWriter<PlayerDied>,
 ) {
     if let Ok((entity, health)) = query.get_single() {
         if health.0 == 0 {
-            commands.entity(entity).despawn();
-
-            for window in focused_windows.iter() {
-                commands.entity(window).despawn();
-            }
+            event_writer.send(PlayerDied);
+            commands.entity(entity).despawn(); // maybe separate the despawning to a different system
         }
     }
-}
-
-#[inline]
-pub fn player_is_dead(player_query: Query<(), With<Player>>) -> bool {
-    player_query.get_single().is_err()
 }
 
 pub(super) fn debug_player_hp(query: Query<&Health, With<Player>>) {

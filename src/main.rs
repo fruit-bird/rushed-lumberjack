@@ -3,7 +3,7 @@ mod game_state;
 mod player;
 mod tree;
 
-use game_state::{game_over, AppState};
+use game_state::AppStatePlugin;
 use player::PlayerPlugin;
 use tree::TreePlugin;
 
@@ -19,10 +19,11 @@ fn main() {
         .insert_resource(ClearColor(COLOR_BACKGROUND))
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(WorldInspectorPlugin::default())
+        // basic systems
         .add_systems(Update, close_on_esc)
-        .add_state::<AppState>()
         .add_systems(Startup, setup_camera)
-        .add_systems(Update, game_over)
+        // plugins
+        .add_plugins(AppStatePlugin)
         .add_plugins(PlayerPlugin)
         .add_plugins(TreePlugin)
         .run();
