@@ -95,6 +95,7 @@ pub(super) fn player_dies(
     }
 }
 
+#[inline]
 pub fn player_is_dead(player_query: Query<(), With<Player>>) -> bool {
     player_query.get_single().is_err()
 }

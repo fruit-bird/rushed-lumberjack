@@ -68,7 +68,6 @@ pub(super) fn player_collides_with_tree(
             )
             .is_some()
             {
-                dbg!(entity, tree_pos.translation);
                 commands.entity(entity).despawn();
                 tree_count.0 -= 1;
             }
@@ -88,6 +87,7 @@ pub(super) fn end_when_no_more_trees(
     }
 }
 
+#[inline]
 pub fn no_more_trees(tree_count: Res<TreeCount>) -> bool {
     tree_count.0 == 0
 }
