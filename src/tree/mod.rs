@@ -20,6 +20,6 @@ impl Plugin for TreePlugin {
         app.insert_resource(TreeCount::new(NUMBER_OF_TREES))
             .add_event::<TreeChopped>()
             .add_systems(Startup, spawn_trees)
-            .add_systems(Update, (player_collides_with_tree, tree_chopped_sfx));
+            .add_systems(Update, (player_collides_with_tree, play_tree_chopped_sfx));
     }
 }

@@ -81,7 +81,7 @@ pub(super) fn player_collides_with_tree(
     }
 }
 
-pub(super) fn tree_chopped_sfx(
+pub(super) fn play_tree_chopped_sfx(
     mut commands: Commands,
     event_reader: EventReader<TreeChopped>,
     asset_server: Res<AssetServer>,
