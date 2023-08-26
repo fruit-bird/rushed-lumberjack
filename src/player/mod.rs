@@ -26,7 +26,8 @@ impl Plugin for PlayerPlugin {
             .add_systems(Startup, spawn_player.run_if(in_state(AppState::Playing)))
             .add_systems(
                 Update,
-                (player_movement, health_drain, player_dies).run_if(in_state(AppState::Playing)),
+                (player_movement, health_drain, player_dies)
+                    .distributive_run_if(in_state(AppState::Playing)),
             )
             .add_systems(
                 FixedUpdate,

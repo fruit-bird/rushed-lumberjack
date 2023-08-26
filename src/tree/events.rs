@@ -1,4 +1,4 @@
 use bevy::prelude::*;
 
 #[derive(Debug, Default, Event)]
-pub struct PlayerDied;
+pub struct TreeChopped;

@@ -86,7 +86,7 @@ pub(super) fn player_dies(
 ) {
     if let Ok((entity, health)) = query.get_single() {
         if health.0 == 0 {
-            event_writer.send(PlayerDied);
+            event_writer.send_default();
             commands.entity(entity).despawn(); // maybe separate the despawning to a different system
         }
     }

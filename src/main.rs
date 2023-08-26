@@ -1,9 +1,11 @@
 mod consts;
 mod game_state;
+mod game_time;
 mod player;
 mod tree;
 
 use game_state::AppStatePlugin;
+use game_time::GameTimePlugin;
 use player::PlayerPlugin;
 use tree::TreePlugin;
 
@@ -24,6 +26,7 @@ fn main() {
         .add_systems(Startup, setup_camera)
         // plugins
         .add_plugins(AppStatePlugin)
+        .add_plugins(GameTimePlugin)
         .add_plugins(PlayerPlugin)
         .add_plugins(TreePlugin)
         .run();

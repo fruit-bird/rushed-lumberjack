@@ -2,6 +2,7 @@ use bevy::{prelude::*, sprite::collide_aabb, window::PrimaryWindow};
 
 use super::{
     components::{Tree, TreeBundle},
+    events::TreeChopped,
     resources::TreeCount,
     NUMBER_OF_TREES, SPRITE_TREE_INDEX,
 };
@@ -60,6 +61,7 @@ pub(super) fn player_collides_with_tree(
     player_query: Query<&Transform, With<Player>>,
     trees_query: Query<(Entity, &Transform), With<Tree>>,
     mut tree_count: ResMut<TreeCount>,
+    mut event_writer: EventWriter<TreeChopped>,
 ) {
     if let Ok(player_pos) = player_query.get_single() {
         for (entity, tree_pos) in trees_query.iter() {
@@ -71,9 +73,23 @@ pub(super) fn player_collides_with_tree(
             )
             .is_some()
             {
+                event_writer.send_default();
                 commands.entity(entity).despawn();
                 tree_count.0 -= 1;
             }
         }
+    }
+}
+
+pub(super) fn tree_chopped_sfx(
+    mut commands: Commands,
+    event_reader: EventReader<TreeChopped>,
+    asset_server: Res<AssetServer>,
+) {
+    if !event_reader.is_empty() {
+        commands.spawn(AudioBundle {
+            source: asset_server.load("audio/biden-skill-issue.ogg"),
+            ..Default::default()
+        });
     }
 }
