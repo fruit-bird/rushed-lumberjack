@@ -9,6 +9,8 @@ use systems::*;
 pub use events::GameEnded;
 pub use resources::GameTime;
 
+use crate::game_state::AppState;
+
 pub const ROUND_LENGTH: Duration = Duration::from_secs(15);
 
 pub struct GameTimePlugin;
@@ -19,8 +21,9 @@ impl Plugin for GameTimePlugin {
             .add_event::<GameEnded>()
             .add_systems(
                 FixedUpdate,
-                (time_drain, debug_time, send_game_end_event, end_game)
+                (time_drain, debug_time, send_game_end_event_and_game_over)
                     .run_if(on_fixed_timer(Duration::from_secs(1))),
-            );
+            )
+            .add_systems(OnExit(AppState::Playing), end_game);
     }
 }

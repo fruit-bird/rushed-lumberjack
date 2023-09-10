@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{player::PlayerDied, tree::TreeCount};
+use crate::tree::TreeCount;
 
 pub struct AppStatePlugin;
 
@@ -22,13 +22,9 @@ pub enum AppState {
     GameOver,
 }
 
-pub fn switch_to_game_over(
-    mut app_state: ResMut<NextState<AppState>>,
-    event_reader: EventReader<PlayerDied>,
-    tree_count: Res<TreeCount>,
-) {
-    if !event_reader.is_empty() | tree_count.is_zero() {
-        info!("Game Over");
+pub fn switch_to_game_over(mut app_state: ResMut<NextState<AppState>>, tree_count: Res<TreeCount>) {
+    if tree_count.is_zero() {
+        println!("Game Over");
         app_state.set(AppState::GameOver);
     }
 }

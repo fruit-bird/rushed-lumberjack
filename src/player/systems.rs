@@ -4,8 +4,7 @@ use crate::consts::*;
 
 use super::{
     components::{Health, Player, PlayerBundle},
-    resources::HealthDrainConfig,
-    PlayerDied, PLAYER_VELOCITY, SPRITE_IDX,
+    PLAYER_VELOCITY, SPRITE_IDX,
 };
 
 pub(super) fn spawn_player(
@@ -62,38 +61,5 @@ pub(super) fn player_movement(
         if input.pressed(KeyCode::S) {
             player_transform.translation.y -= time.delta_seconds() * PLAYER_VELOCITY;
         }
-    }
-}
-
-pub(super) fn health_drain(
-    mut query: Query<&mut Health, With<Player>>,
-    mut config: ResMut<HealthDrainConfig>,
-    time: Res<Time>,
-) {
-    config.timer.tick(time.delta());
-
-    if config.timer.finished() {
-        if let Ok(mut health) = query.get_single_mut() {
-            health.0 -= 1;
-        }
-    }
-}
-
-pub(super) fn player_dies(
-    mut commands: Commands,
-    query: Query<(Entity, &Health), With<Player>>,
-    mut event_writer: EventWriter<PlayerDied>,
-) {
-    if let Ok((entity, health)) = query.get_single() {
-        if health.0 == 0 {
-            event_writer.send_default();
-            commands.entity(entity).despawn(); // maybe separate the despawning to a different system
-        }
-    }
-}
-
-pub(super) fn debug_player_hp(query: Query<&Health, With<Player>>) {
-    if let Ok(Health(hp)) = query.get_single() {
-        println!("{}hp", hp);
     }
 }
